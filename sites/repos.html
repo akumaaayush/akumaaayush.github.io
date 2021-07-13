@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <title>AAYUSH | REPOS</title>
+  </head>
+
+  <body>
+    <!-- NAV BAR -->
+    <nav>
+      <div class="navbar__left">
+        <h1><a href="../index.html">Akumaaayush</a></h1>
+        <p>BASIC PORTFOLIO</p>
+      </div>
+      <ul>
+        <li><a href="./repos.html">Github Projects</a></li>
+        <li><a href="./feed.html">Twitter Feed</a></li>
+        <li><a href="./about.html">About me</a></li>
+      </ul>
+    </nav>
+
+    <div class="container" style="text-align: left">
+      <h2 style="font-size: 2rem">
+        Here are some of the repositories from my github profile.
+      </h2>
+      <br />
+      <ul class="repos"></ul>
+    </div>
+
+    <script>
+      const list = document.querySelector(" .repos");
+      const getDatas = async function () {
+        try {
+          const res = await fetch(
+            "https://api.github.com/users/akumaaayush/repos"
+          );
+          const data = await res.json();
+          updateRepos(data);
+        } catch (err) {
+          console.log("Unable to fetch data from the API!");
+        }
+      };
+      const updateRepos = function (data) {
+        const repos = data.map((elm) => elm.name);
+        const links = data.map((elm) => elm.html_url);
+
+        data.forEach((repo) => {
+          const node = document.createElement("li");
+          const textelement = document.createTextNode(`${repo.name}.`);
+          node.appendChild(textelement);
+          list.appendChild(node);
+
+          const link = document.createElement("a");
+          link.textContent = '-link'
+          link.style.fontSize = '1.5rem'
+          link.style.paddingLeft = '20px'
+          link.style.textDecoration = 'underline'
+          link.href = repo.html_url
+          list.appendChild(link)
+        });
+      };
+      getDatas();
+    </script>
+  </body>
+</html>

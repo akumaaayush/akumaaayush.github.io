@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/styles.css" />
+
+    <title>AAYUSH | ABOUT ME</title>
+  </head>
+
+  <body>
+    <!-- NAV BAR -->
+    <nav>
+      <div class="navbar__left">
+        <h1><a href="../index.html">Akumaaayush</a></h1>
+        <p>BASIC PORTFOLIO</p>
+      </div>
+      <ul>
+        <li><a href="./repos.html">Github Projects</a></li>
+        <li><a href="./feed.html">Twitter Feed</a></li>
+        <li><a href="./about.html">About me</a></li>
+      </ul>
+    </nav>
+
+    <div class="container">
+      <div class="about">
+        <img id="profileImage" alt="" height="200" width="200" />
+        <h2>Hi, it's me Aayush Shah.</h2>
+        <h2 class="followers"></h2>
+        <h2>
+          Checkout my github
+          <i
+            ><a
+              target="_blank"
+              id="profile_url"
+              style="text-decoration: underline"
+              >here.</a
+            ></i
+          >
+        </h2>
+      </div>
+    </div>
+
+    <script>
+      const getDatas = async function () {
+        try {
+          const res = await fetch("https://api.github.com/users/akumaaayush");
+          const data = await res.json();
+          updateAbout(data);
+        } catch (err) {
+          console.log("Unable to fetch data from the API!");
+        }
+      };
+
+      const updateAbout = function (data) {
+        //   console.log(data);
+        document.querySelector("#profileImage").src = data.avatar_url;
+        document.querySelector("#profile_url").href = data.html_url;
+        document.querySelector(
+          ".followers"
+        ).textContent = `I have been followed by ${data.followers} amazing programmers.`;
+      };
+
+      getDatas();
+    </script>
+  </body>
+</html>
